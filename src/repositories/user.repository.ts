@@ -1,12 +1,4 @@
-import { AppDataSource } from "./../data-source";
-
-import {
-  DataSource,
-  EntityManager,
-  EntityRepository,
-  ObjectLiteral,
-  Repository,
-} from "typeorm";
+import { Repository, EntityRepository, DataSource } from "typeorm";
 import User from "../entities/user.entity";
 import { CreateUserDto } from "../dtos/createuser.dto";
 
@@ -17,11 +9,10 @@ class UserRepository extends Repository<User> {
 
   async createUser(user: CreateUserDto) {
     try {
-      const data = new User();
+      let data = new User();
       data.name = user.name;
       data.email = user.email;
       data.age = user.age;
-
       const result = await this.save(data);
       return result;
     } catch (err) {
