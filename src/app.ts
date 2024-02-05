@@ -1,17 +1,20 @@
-import cors from "cors";
-import express from "express";
-import { register } from "module";
-import UserRepository from "./repositories/user.repository";
 import User from "./entities/user.entity";
-import UserService from "./services/user.service";
-import UserController from "./controllers/user.controller";
-import { AppDataSource } from "./data-source";
+import { createConnection } from "typeorm";
 
-const app = express();
-
-app.use(cors);
-app.use(express.json());
-
-const userRepository = new UserRepository(AppDataSource);
-const userService = new UserService(userRepository);
-const userController = new UserController(userService);
+export const createTestConnection = async () => {
+  const datasource = await createConnection({
+    type: "postgres",
+    host: "localhost",
+    port: 5432,
+    username: "postgres",
+    password: "password",
+    database: "postgres",
+    synchronize: true,
+    logging: false,
+    entities: [User],
+    migrations: [],
+    subscribers: [],
+  });
+  console.log("Connect PG DB success");
+  return datasource;
+};
