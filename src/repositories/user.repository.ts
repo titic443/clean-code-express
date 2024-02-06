@@ -7,7 +7,7 @@ class UserRepository extends Repository<User> {
     super(User, datasource.createEntityManager());
   }
 
-  async createUser(user: CreateUserDto) {
+  async insertData(user: CreateUserDto) {
     try {
       let data = new User();
       data.name = user.name;
